@@ -6,24 +6,31 @@ import { UpdateGameDto } from './dto/update-game.dto';
 @Injectable()
 export class GamesService {
   constructor(private readonly prisma: PrismaService) {}
-
-  create(createGameDto: CreateGameDto) {
-    return 'This action adds a new game';
+  create(data: CreateGameDto) {
+    return this.prisma.game.create({ data });
   }
 
   findAll() {
-    return `This action returns all games`;
+    return this.prisma.game.findMany({
+      include: {
+        favorites: { include: { profile: true } },
+        genres: { include: { genre: true } },
+      },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} game`;
+  async findOne(id: number) {
+    return this.prisma.game.findUnique({
+      where: { id },
+      rejectOnNotFound: true,
+    });
   }
 
-  update(id: number, updateGameDto: UpdateGameDto) {
-    return `This action updates a #${id} game`;
+  async update(id: number, data: UpdateGameDto) {
+    return this.prisma.game.update({ where: { id }, data });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} game`;
+  async remove(id: number) {
+    return this.prisma.game.delete({ where: { id } });
   }
 }

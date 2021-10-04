@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpException} from '@nestjs/common';
 import { GamesService } from './games.service';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
@@ -6,6 +6,10 @@ import { UpdateGameDto } from './dto/update-game.dto';
 @Controller('games')
 export class GamesController {
   constructor(private readonly gamesService: GamesService) {}
+
+  private readonly notFound = (id: string) => {
+    throw new HttpException(`The game with #${id} id was not found.`, 404);
+  };
 
   @Post()
   create(@Body() createGameDto: CreateGameDto) {
@@ -19,16 +23,16 @@ export class GamesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.gamesService.findOne(+id);
+    return this.gamesService.findOne(+id).catch(error => this.notFound(id));
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateGameDto: UpdateGameDto) {
-    return this.gamesService.update(+id, updateGameDto);
+    return this.gamesService.update(+id, updateGameDto).catch(error => this.notFound(id));
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.gamesService.remove(+id);
+    return this.gamesService.remove(+id).catch(error => this.notFound(id));
   }
 }
