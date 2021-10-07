@@ -20,6 +20,9 @@ const update_game_dto_1 = require("./dto/update-game.dto");
 let GamesController = class GamesController {
     constructor(gamesService) {
         this.gamesService = gamesService;
+        this.notFound = (id) => {
+            throw new common_1.HttpException(`The game with #${id} id was not teste.`, 404);
+        };
     }
     create(createGameDto) {
         return this.gamesService.create(createGameDto);
@@ -28,13 +31,13 @@ let GamesController = class GamesController {
         return this.gamesService.findAll();
     }
     findOne(id) {
-        return this.gamesService.findOne(+id);
+        return this.gamesService.findOne(+id).catch(error => this.notFound(id));
     }
     update(id, updateGameDto) {
-        return this.gamesService.update(+id, updateGameDto);
+        return this.gamesService.update(+id, updateGameDto).catch(error => this.notFound(id));
     }
     remove(id) {
-        return this.gamesService.remove(+id);
+        return this.gamesService.remove(+id).catch(error => this.notFound(id));
     }
 };
 __decorate([

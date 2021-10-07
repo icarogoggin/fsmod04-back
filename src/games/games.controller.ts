@@ -8,7 +8,7 @@ export class GamesController {
   constructor(private readonly gamesService: GamesService) {}
 
   private readonly notFound = (id: string) => {
-    throw new HttpException(`The game with #${id} id was not found.`, 404);
+    throw new HttpException(`The game with #${id} id was not teste.`, 404);
   };
 
   @Post()

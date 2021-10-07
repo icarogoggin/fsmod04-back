@@ -20,6 +20,9 @@ const update_user_dto_1 = require("./dto/update-user.dto");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
+        this.notFound = (id) => {
+            throw new common_1.HttpException(`The user with #${id} was not found`, 404);
+        };
     }
     create(createUserDto) {
         return this.usersService.create(createUserDto);
@@ -28,13 +31,15 @@ let UsersController = class UsersController {
         return this.usersService.findAll();
     }
     findOne(id) {
-        return this.usersService.findOne(+id);
+        return this.usersService.findOne(+id).catch((err) => this.notFound(id));
     }
     update(id, updateUserDto) {
-        return this.usersService.update(+id, updateUserDto);
+        return this.usersService
+            .update(+id, updateUserDto)
+            .catch((err) => this.notFound(id));
     }
     remove(id) {
-        return this.usersService.remove(+id);
+        return this.usersService.remove(+id).catch((err) => this.notFound(id));
     }
 };
 __decorate([

@@ -20,6 +20,9 @@ const update_profile_dto_1 = require("./dto/update-profile.dto");
 let ProfilesController = class ProfilesController {
     constructor(profilesService) {
         this.profilesService = profilesService;
+        this.notFound = (id) => {
+            throw new common_1.HttpException(`The profile with id #${id} was not found!`, 404);
+        };
     }
     create(createProfileDto) {
         return this.profilesService.create(createProfileDto);
@@ -28,13 +31,15 @@ let ProfilesController = class ProfilesController {
         return this.profilesService.findAll();
     }
     findOne(id) {
-        return this.profilesService.findOne(+id);
+        return this.profilesService.findOne(+id).catch((err) => this.notFound(id));
     }
     update(id, updateProfileDto) {
-        return this.profilesService.update(+id, updateProfileDto);
+        return this.profilesService
+            .update(+id, updateProfileDto)
+            .catch((err) => this.notFound(id));
     }
     remove(id) {
-        return this.profilesService.remove(+id);
+        return this.profilesService.remove(+id).catch((err) => this.notFound(id));
     }
 };
 __decorate([

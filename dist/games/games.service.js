@@ -16,20 +16,28 @@ let GamesService = class GamesService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    create(createGameDto) {
-        return 'This action adds a new game';
+    create(data) {
+        return this.prisma.game.create({ data });
     }
     findAll() {
-        return `This action returns all games`;
+        return this.prisma.game.findMany({
+            include: {
+                favorites: { include: { profile: true } },
+                genres: { include: { genre: true } },
+            },
+        });
     }
-    findOne(id) {
-        return `This action returns a #${id} game`;
+    async findOne(id) {
+        return this.prisma.game.findUnique({
+            where: { id },
+            rejectOnNotFound: true,
+        });
     }
-    update(id, updateGameDto) {
-        return `This action updates a #${id} game`;
+    async update(id, data) {
+        return this.prisma.game.update({ where: { id }, data });
     }
-    remove(id) {
-        return `This action removes a #${id} game`;
+    async remove(id) {
+        return this.prisma.game.delete({ where: { id } });
     }
 };
 GamesService = __decorate([

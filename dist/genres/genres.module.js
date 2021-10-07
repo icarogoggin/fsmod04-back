@@ -10,12 +10,13 @@ exports.GenresModule = void 0;
 const common_1 = require("@nestjs/common");
 const genres_service_1 = require("./genres.service");
 const genres_controller_1 = require("./genres.controller");
+const prisma_service_1 = require("../prisma/prisma.service");
 let GenresModule = class GenresModule {
 };
 GenresModule = __decorate([
     (0, common_1.Module)({
         controllers: [genres_controller_1.GenresController],
-        providers: [genres_service_1.GenresService]
+        providers: [genres_service_1.GenresService, prisma_service_1.PrismaService]
     })
 ], GenresModule);
 exports.GenresModule = GenresModule;

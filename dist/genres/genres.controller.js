@@ -20,6 +20,9 @@ const update_genre_dto_1 = require("./dto/update-genre.dto");
 let GenresController = class GenresController {
     constructor(genresService) {
         this.genresService = genresService;
+        this.notFound = (id) => {
+            throw new common_1.HttpException(`The genre with id #${id} wasn't found!`, 404);
+        };
     }
     create(createGenreDto) {
         return this.genresService.create(createGenreDto);
@@ -28,13 +31,15 @@ let GenresController = class GenresController {
         return this.genresService.findAll();
     }
     findOne(id) {
-        return this.genresService.findOne(+id);
+        return this.genresService.findOne(+id).catch((err) => this.notFound(id));
     }
     update(id, updateGenreDto) {
-        return this.genresService.update(+id, updateGenreDto);
+        return this.genresService
+            .update(+id, updateGenreDto)
+            .catch((err) => this.notFound(id));
     }
     remove(id) {
-        return this.genresService.remove(+id);
+        return this.genresService.remove(+id).catch((err) => this.notFound(id));
     }
 };
 __decorate([
