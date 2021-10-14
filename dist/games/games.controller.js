@@ -31,13 +31,15 @@ let GamesController = class GamesController {
         return this.gamesService.findAll();
     }
     findOne(id) {
-        return this.gamesService.findOne(+id).catch(error => this.notFound(id));
+        return this.gamesService.findOne(+id).catch((error) => this.notFound(id));
     }
     update(id, updateGameDto) {
-        return this.gamesService.update(+id, updateGameDto).catch(error => this.notFound(id));
+        return this.gamesService
+            .update(+id, updateGameDto)
+            .catch((error) => this.notFound(id));
     }
     remove(id) {
-        return this.gamesService.remove(+id).catch(error => this.notFound(id));
+        return this.gamesService.remove(+id).catch((error) => this.notFound(id));
     }
 };
 __decorate([
