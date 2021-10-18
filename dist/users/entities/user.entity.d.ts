@@ -1,10 +1,10 @@
-import { Prisma } from ".prisma/client";
-export declare class User implements Prisma.UserUncheckedCreateInput {
+import { Profile } from 'src/profiles/entities/profile.entity';
+export declare class User {
     id?: number;
     name: string;
     lastName: string;
     email: string;
     password: string;
     cpf: string;
-    profiles?: Prisma.ProfileUncheckedCreateNestedManyWithoutUserInput;
+    profiles?: Profile[];
 }

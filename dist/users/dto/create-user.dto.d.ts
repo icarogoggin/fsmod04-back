@@ -1,4 +1,4 @@
-import { Prisma } from '.prisma/client';
+import { CreateProfileDto } from 'src/profiles/dto/create-profile.dto';
 import { User } from '../entities/user.entity';
 export declare class CreateUserDto extends User {
     name: string;
@@ -6,5 +6,5 @@ export declare class CreateUserDto extends User {
     email: string;
     password: string;
     cpf: string;
-    profiles?: Prisma.ProfileUncheckedCreateNestedManyWithoutUserInput;
+    profiles?: CreateProfileDto[];
 }

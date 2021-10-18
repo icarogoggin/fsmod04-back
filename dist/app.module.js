@@ -14,11 +14,12 @@ const games_module_1 = require("./games/games.module");
 const genres_module_1 = require("./genres/genres.module");
 const profiles_module_1 = require("./profiles/profiles.module");
 const users_module_1 = require("./users/users.module");
+const auth_module_1 = require("./auth/auth.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
     (0, common_1.Module)({
-        imports: [games_module_1.GamesModule, genres_module_1.GenresModule, profiles_module_1.ProfilesModule, users_module_1.UsersModule],
+        imports: [games_module_1.GamesModule, genres_module_1.GenresModule, profiles_module_1.ProfilesModule, users_module_1.UsersModule, auth_module_1.AuthModule],
         controllers: [app_controller_1.AppController],
         providers: [app_service_1.AppService],
     })

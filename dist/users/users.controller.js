@@ -34,12 +34,10 @@ let UsersController = class UsersController {
         return this.usersService.findOne(+id).catch((err) => this.notFound(id));
     }
     update(id, updateUserDto) {
-        return this.usersService
-            .update(+id, updateUserDto)
-            .catch((err) => this.notFound(id));
+        return this.usersService.update(+id, updateUserDto);
     }
     remove(id) {
-        return this.usersService.remove(+id).catch((err) => this.notFound(id));
+        this.usersService.remove(+id).catch((err) => this.notFound(id));
     }
 };
 __decorate([
@@ -72,6 +70,7 @@ __decorate([
 ], UsersController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
+    (0, common_1.HttpCode)(common_1.HttpStatus.NO_CONTENT),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
