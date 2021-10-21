@@ -33,6 +33,9 @@ let UsersController = class UsersController {
     findOne(id) {
         return this.usersService.findOne(+id).catch((err) => this.notFound(id));
     }
+    findEmail(email) {
+        return this.usersService.findEmail(email);
+    }
     update(id, updateUserDto) {
         return this.usersService.update(+id, updateUserDto);
     }
@@ -60,6 +63,13 @@ __decorate([
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "findOne", null);
+__decorate([
+    (0, common_1.Get)('/findByEmail/:email'),
+    __param(0, (0, common_1.Param)(':email')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "findEmail", null);
 __decorate([
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),

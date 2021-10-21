@@ -11,6 +11,7 @@ import {
 import { GenresService } from './genres.service';
 import { CreateGenreDto } from './dto/create-genre.dto';
 import { UpdateGenreDto } from './dto/update-genre.dto';
+import { Public } from '../auth/public.decorator';
 
 @Controller('genres')
 export class GenresController {
@@ -24,12 +25,12 @@ export class GenresController {
   create(@Body() createGenreDto: CreateGenreDto) {
     return this.genresService.create(createGenreDto);
   }
-
+  @Public()
   @Get()
   findAll() {
     return this.genresService.findAll();
   }
-
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.genresService.findOne(+id).catch((err) => this.notFound(id));

@@ -17,14 +17,17 @@ const common_1 = require("@nestjs/common");
 const games_service_1 = require("./games.service");
 const create_game_dto_1 = require("./dto/create-game.dto");
 const update_game_dto_1 = require("./dto/update-game.dto");
+const public_decorator_1 = require("../auth/public.decorator");
+const current_user_decorator_1 = require("../auth/current-user.decorator");
+const user_entity_1 = require("../users/entities/user.entity");
 let GamesController = class GamesController {
     constructor(gamesService) {
         this.gamesService = gamesService;
         this.notFound = (id) => {
-            throw new common_1.HttpException(`The game with #${id} id was not teste.`, 404);
+            throw new common_1.HttpException(`The game with #${id} id was not.`, 404);
         };
     }
-    create(createGameDto) {
+    create(usuario, createGameDto) {
         return this.gamesService.create(createGameDto);
     }
     findAll() {
@@ -33,29 +36,32 @@ let GamesController = class GamesController {
     findOne(id) {
         return this.gamesService.findOne(+id).catch((error) => this.notFound(id));
     }
-    update(id, updateGameDto) {
+    update(usuario, id, updateGameDto) {
         return this.gamesService
             .update(+id, updateGameDto)
             .catch((error) => this.notFound(id));
     }
-    remove(id) {
+    remove(usuario, id) {
         return this.gamesService.remove(+id).catch((error) => this.notFound(id));
     }
 };
 __decorate([
     (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
+    __param(0, (0, current_user_decorator_1.CurrentUser)()),
+    __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [create_game_dto_1.CreateGameDto]),
+    __metadata("design:paramtypes", [user_entity_1.User, create_game_dto_1.CreateGameDto]),
     __metadata("design:returntype", void 0)
 ], GamesController.prototype, "create", null);
 __decorate([
+    (0, public_decorator_1.Public)(),
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], GamesController.prototype, "findAll", null);
 __decorate([
+    (0, public_decorator_1.Public)(),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
@@ -64,17 +70,19 @@ __decorate([
 ], GamesController.prototype, "findOne", null);
 __decorate([
     (0, common_1.Patch)(':id'),
-    __param(0, (0, common_1.Param)('id')),
-    __param(1, (0, common_1.Body)()),
+    __param(0, (0, current_user_decorator_1.CurrentUser)()),
+    __param(1, (0, common_1.Param)('id')),
+    __param(2, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, update_game_dto_1.UpdateGameDto]),
+    __metadata("design:paramtypes", [user_entity_1.User, String, update_game_dto_1.UpdateGameDto]),
     __metadata("design:returntype", void 0)
 ], GamesController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
-    __param(0, (0, common_1.Param)('id')),
+    __param(0, (0, current_user_decorator_1.CurrentUser)()),
+    __param(1, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [user_entity_1.User, String]),
     __metadata("design:returntype", void 0)
 ], GamesController.prototype, "remove", null);
 GamesController = __decorate([

@@ -19,6 +19,9 @@ export declare class UsersController {
     findOne(id: string): Promise<import(".prisma/client").User & {
         profiles: import(".prisma/client").Profile[];
     }>;
+    findEmail(email: string): Promise<import(".prisma/client").User & {
+        profiles: import(".prisma/client").Profile[];
+    }>;
     update(id: string, updateUserDto: UpdateUserDto): Promise<import(".prisma/client").User>;
     remove(id: string): void;
 }
